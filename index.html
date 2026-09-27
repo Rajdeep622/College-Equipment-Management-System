@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Event & Campus Management System | ERP Portal</title>
+    <meta name="description" content="College Event Management System with Event Registration, Schedule Viewing, Organizer Login, and Campus Equipment Management. Developed for SE & Web Development Lab.">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom ERP CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Main Application Shell -->
+    <div class="app-container">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                    <div class="brand-title">Event ERP</div>
+                    <div class="brand-subtitle">College Management</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a class="nav-item" data-view-target="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-item" data-view-target="events">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Event Schedule (Feature 1)</span>
+                </a>
+                <a class="nav-item" data-view-target="event-register">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Event Registration (Feature 2)</span>
+                </a>
+                <a class="nav-item" data-view-target="equipment">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>Equipment Management</span>
+                </a>
+                <a class="nav-item" data-view-target="issue">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Issue Equipment</span>
+                </a>
+                <a class="nav-item" data-view-target="return">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Return & Fine Calculation</span>
+                </a>
+                <a class="nav-item" data-view-target="profile">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Student Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-mini-card">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" class="user-avatar js-user-avatar" alt="Student Avatar">
+                    <div class="user-info">
+                        <div class="user-name js-user-name">Rajdeep Patel</div>
+                        <div class="user-role js-user-id">24102C0043</div>
+                    </div>
+                    <button class="action-btn" title="Logout" onclick="app.logout()" style="width: 32px; height: 32px; font-size: 0.8rem;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+
+            <!-- Top Header Navbar -->
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <button class="action-btn" id="mobile-nav-toggle" style="display: none;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="global-search" placeholder="Search events, schedules, equipment...">
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="action-btn" title="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-badge"></span>
+                    </div>
+                    <div class="action-btn" title="Campus Info">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="app.logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Body Views Container -->
+            <main class="content-body">
+
+                <!-- 1. HOME / LANDING PAGE VIEW (Practical #2) -->
+                <section class="page-view landing-view" id="view-landing">
+                    <div class="landing-nav">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="brand-icon">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div>
+                                <div class="brand-title" style="font-size: 1.3rem;">College Event System</div>
+                                <div class="brand-subtitle">Web Development Lab Project</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-secondary" onclick="app.switchView('register')">
+                                <i class="fa-solid fa-user-plus"></i> Student Registration
+                            </button>
+                            <button class="btn btn-primary" onclick="app.switchView('login')">
+                                <i class="fa-solid fa-right-to-bracket"></i> Organizer / Student Login
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="landing-hero">
+                        <div class="hero-tag">
+                            <i class="fa-solid fa-graduation-cap"></i> SE & Web Development Lab Project
+                        </div>
+                        <h1 class="hero-title">
+                            College Event & <span class="gradient-text">Resource Portal</span>
+                        </h1>
+                        <p class="hero-description">
+                            Comprehensive system for Event Registration, Schedule Viewing, Organizer Login, JavaScript Form Validation, and Campus Equipment Resource Allocation.
+                        </p>
+                        <div style="display: flex; justify-content: center; gap: 16px;">
+                            <button class="btn btn-primary" onclick="app.switchView('events')" style="padding: 14px 28px; font-size: 1rem;">
+                                <i class="fa-solid fa-calendar-days"></i> View Event Schedule
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.switchView('register')" style="padding: 14px 28px; font-size: 1rem;">
+                                <i class="fa-solid fa-user-plus"></i> Registration Form Validation
+                            </button>
+                        </div>
+
+                        <div class="landing-stats">
+                            <div class="stat-box">
+                                <div class="num">12+</div>
+                                <div class="lbl">Upcoming College Events</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="num">350+</div>
+                                <div class="lbl">Equipment Units</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="num">1,800+</div>
+                                <div class="lbl">Event Registrations</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="num">100%</div>
+                                <div class="lbl">Lab Practical Validation</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. LOGIN PAGE VIEW (Practical #2 & Organizer Login) -->
+                <section class="page-view active" id="view-login">
+                    <div style="max-width: 460px; margin: 30px auto; background: var(--bg-surface); border: 1px solid var(--border-glow); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow-lg);">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div class="brand-icon" style="margin: 0 auto 16px; width: 56px; height: 56px; font-size: 1.6rem;">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <h2 style="font-size: 1.6rem;">System Login</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Student & Organizer Portal Authentication</p>
+                        </div>
+
+                        <!-- Login Type Selector Tab -->
+                        <div style="display: flex; background: var(--bg-surface-elevated); padding: 4px; border-radius: var(--radius-sm); margin-bottom: 20px;">
+                            <button type="button" class="btn btn-sm" id="btn-tab-student" onclick="app.setLoginRole('Student')" style="flex: 1; background: var(--primary); color: white;">
+                                <i class="fa-solid fa-user-graduate"></i> Student Login
+                            </button>
+                            <button type="button" class="btn btn-sm" id="btn-tab-organizer" onclick="app.setLoginRole('Organizer')" style="flex: 1; background: transparent; color: var(--text-secondary);">
+                                <i class="fa-solid fa-user-gear"></i> Organizer Login
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Error Banner -->
+                        <div id="login-error-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); color: var(--danger); padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.88rem; margin-bottom: 20px; font-weight: 500;">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <form id="login-form" novalidate>
+                            <div class="form-group">
+                                <label class="form-label" for="login-college-id" id="login-id-label">College Student ID / Username *</label>
+                                <input type="text" class="form-control" id="login-college-id" value="24102C0043" placeholder="e.g. 24102C0043" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="login-password">Password *</label>
+                                <input type="password" class="form-control" id="login-password" value="Rajdeep@123" placeholder="Min. 6 characters" required>
+                            </div>
+
+                            <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block" style="padding: 12px; font-size: 0.95rem; margin-top: 10px;">
+                                <i class="fa-solid fa-right-to-bracket"></i> Verify & Sign In
+                            </button>
+                        </form>
+
+                        <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-secondary);">
+                            Don't have an account? <a href="#" onclick="app.switchView('register')" style="color: var(--primary-light); text-decoration: none; font-weight: 600;">Register Here</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. REGISTRATION PAGE VIEW (Practical #3 Validation Engine) -->
+                <section class="page-view" id="view-register">
+                    <div style="max-width: 620px; margin: 24px auto; background: var(--bg-surface); border: 1px solid var(--border-glow); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow-lg);">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div class="brand-icon" style="margin: 0 auto 16px; width: 56px; height: 56px; font-size: 1.6rem;">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </div>
+                            <h2 style="font-size: 1.6rem;">Student Registration Page</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Lab Manual Practical #3 Form Validation Suite</p>
+                        </div>
+
+                        <!-- Registration Error Banner -->
+                        <div id="reg-error-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); color: var(--danger); padding: 14px 18px; border-radius: var(--radius-sm); font-size: 0.88rem; margin-bottom: 20px;">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <form id="registration-form" novalidate>
+                            <div class="form-row">
+                                <!-- Rule 1: First Name (Alphabets only, length >= 6) -->
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-first-name">1. First Name *</label>
+                                    <input type="text" class="form-control" id="reg-first-name" placeholder="Alphabets only (min 6 chars)" required>
+                                    <div class="invalid-feedback">First Name must contain alphabets only and be at least 6 characters.</div>
+                                </div>
+
+                                <!-- Rule 5: Last Name (Should not be empty) -->
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-last-name">5. Last Name *</label>
+                                    <input type="text" class="form-control" id="reg-last-name" placeholder="Cannot be empty" required>
+                                    <div class="invalid-feedback">Last Name should not be empty.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <!-- Rule 3: Email ID (Standard pattern name@domain.com) -->
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-email">3. Email ID *</label>
+                                    <input type="email" class="form-control" id="reg-email" placeholder="name@domain.com" required>
+                                    <div class="invalid-feedback">Must follow standard pattern (name@domain.com).</div>
+                                </div>
+
+                                <!-- Rule 4: Mobile Number (10 digits only) -->
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-mobile">4. Mobile Number *</label>
+                                    <input type="text" class="form-control" id="reg-mobile" placeholder="10 digits only" required maxLength="10">
+                                    <div class="invalid-feedback">Phone number should contain 10 digits only.</div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 5: Address (Should not be empty) -->
+                            <div class="form-group">
+                                <label class="form-label" for="reg-address">5. Address *</label>
+                                <textarea class="form-control" id="reg-address" rows="2" placeholder="Should not be empty" required></textarea>
+                                <div class="invalid-feedback">Address should not be empty.</div>
+                            </div>
+
+                            <!-- Rule 2: Password (Length not less than 6 characters) -->
+                            <div class="form-group">
+                                <label class="form-label" for="reg-password">2. Password *</label>
+                                <input type="password" class="form-control" id="reg-password" placeholder="Min. 6 characters length" required>
+                                <div class="invalid-feedback">Password should not be less than 6 characters length.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" style="padding: 12px; font-size: 0.95rem; margin-top: 10px;">
+                                <i class="fa-solid fa-check-circle"></i> Validate & Submit Registration
+                            </button>
+
+                            <div style="text-align: center; margin-top: 16px; font-size: 0.88rem; color: var(--text-secondary);">
+                                Already registered? <a href="#" onclick="app.switchView('login')" style="color: var(--primary-light); text-decoration: none; font-weight: 600;">Sign In Here</a>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 4. EVENT SCHEDULE & CATALOG VIEW (Feature 1 in Lab Manual) -->
+                <section class="page-view" id="view-events">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">College Event Schedule & Catalog</h1>
+                            <p class="page-desc">Feature 1: Browse upcoming campus hackathons, cultural fests, technical workshops, and sports meets.</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" onclick="app.switchView('event-register')">
+                                <i class="fa-solid fa-ticket"></i> Register for an Event
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Event Category Filter Chips -->
+                    <div class="filter-bar" id="event-category-filters">
+                        <span class="filter-chip active" data-event-category="All">All Events</span>
+                        <span class="filter-chip" data-event-category="Technical">Technical</span>
+                        <span class="filter-chip" data-event-category="Cultural">Cultural</span>
+                        <span class="filter-chip" data-event-category="Sports">Sports</span>
+                        <span class="filter-chip" data-event-category="Workshops">Workshops</span>
+                    </div>
+
+                    <!-- Events Grid Container -->
+                    <div class="equipment-grid" id="events-grid-container">
+                        <!-- Rendered dynamically by JS -->
+                    </div>
+                </section>
+
+                <!-- 5. EVENT REGISTRATION PAGE (Feature 2 in Lab Manual) -->
+                <section class="page-view" id="view-event-register">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Event Registration Form</h1>
+                            <p class="page-desc">Feature 2: Register for campus events, competitions, and technical workshops.</p>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 660px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-md);">
+                        <form id="event-booking-form" novalidate>
+                            <div class="form-group">
+                                <label class="form-label" for="event-select">Select Event *</label>
+                                <select class="form-control" id="event-select" required>
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Student Name</label>
+                                    <input type="text" class="form-control js-user-name" readonly value="Rajdeep Patel" style="background: rgba(0,0,0,0.2);">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">College ID / Roll No</label>
+                                    <input type="text" class="form-control js-user-id" readonly value="24102C0043" style="background: rgba(0,0,0,0.2);">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="event-ticket-type">Registration Pass Category *</label>
+                                    <select class="form-control" id="event-ticket-type">
+                                        <option value="Participant">Regular Participant Pass</option>
+                                        <option value="VIP Delegate">VIP Delegate Pass</option>
+                                        <option value="Team Captain">Team Entry Pass (Group of 4)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="event-team-name">Team / Organization Name</label>
+                                    <input type="text" class="form-control" id="event-team-name" placeholder="e.g. CodeWarriors Team">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-notes">Special Requirements / T-Shirt Size</label>
+                                <textarea class="form-control" id="event-notes" rows="2" placeholder="e.g. Dietary preference, T-Shirt size L"></textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                                <button type="button" class="btn btn-secondary" onclick="app.switchView('events')">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-check-circle"></i> Confirm Event Registration
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 6. DASHBOARD VIEW -->
+                <section class="page-view" id="view-dashboard">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Welcome back, <span class="js-user-name" style="color: var(--primary-light);">Student</span>!</h1>
+                            <p class="page-desc">Overview of your registered events, active equipment issues, and system stats.</p>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-secondary" onclick="app.switchView('events')">
+                                <i class="fa-solid fa-calendar-days"></i> Browse Events
+                            </button>
+                            <button class="btn btn-primary" onclick="app.switchView('issue')">
+                                <i class="fa-solid fa-plus"></i> Request Equipment
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards Row -->
+                    <div class="grid-cards">
+                        <div class="summary-card">
+                            <div class="card-icon-wrapper card-icon-primary">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div class="card-details">
+                                <h4>Registered Events</h4>
+                                <div class="val" id="dash-registered-events">2</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-card">
+                            <div class="card-icon-wrapper card-icon-success">
+                                <i class="fa-solid fa-cubes"></i>
+                            </div>
+                            <div class="card-details">
+                                <h4>Total Equipment</h4>
+                                <div class="val" id="dash-total-eq">0</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-card">
+                            <div class="card-icon-wrapper card-icon-accent">
+                                <i class="fa-solid fa-hand-holding-box"></i>
+                            </div>
+                            <div class="card-details">
+                                <h4>Issued Equipment</h4>
+                                <div class="val" id="dash-issued-eq">0</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-card">
+                            <div class="card-icon-wrapper card-icon-warning">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                            <div class="card-details">
+                                <h4>Pending Requests</h4>
+                                <div class="val" id="dash-pending-req">0</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-card">
+                            <div class="card-icon-wrapper card-icon-danger">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                            </div>
+                            <div class="card-details">
+                                <h4>Penalty Amount</h4>
+                                <div class="val" id="dash-penalty-amt" style="color: var(--danger);">₹0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Registered Events & Active Issues Tables -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-bottom: 28px;">
+                        <!-- Registered Events Table -->
+                        <div class="table-card">
+                            <div class="table-header-bar">
+                                <div>
+                                    <h3 style="font-size: 1.05rem;">My Registered College Events</h3>
+                                    <p style="font-size: 0.78rem; color: var(--text-secondary);">Upcoming schedules & passes</p>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="app.switchView('events')">
+                                    Schedule <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="erp-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Event Name</th>
+                                            <th>Date & Venue</th>
+                                            <th>Pass</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-events-table">
+                                        <!-- Rendered by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Active Issues Table -->
+                        <div class="table-card">
+                            <div class="table-header-bar">
+                                <div>
+                                    <h3 style="font-size: 1.05rem;">My Active Equipment Issues</h3>
+                                    <p style="font-size: 0.78rem; color: var(--text-secondary);">Checked out items & penalties</p>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="app.switchView('return')">
+                                    Returns <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="erp-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipment</th>
+                                            <th>Due Date</th>
+                                            <th>Penalty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-recent-table">
+                                        <!-- Rendered by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. EQUIPMENT MANAGEMENT VIEW -->
+                <section class="page-view" id="view-equipment">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Equipment & Resource Management</h1>
+                            <p class="page-desc">Browse and request available lab equipment, audio-visual tools, and sports gear.</p>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter Chips -->
+                    <div class="filter-bar" id="category-filters">
+                        <span class="filter-chip active" data-category="All">All Items</span>
+                        <span class="filter-chip" data-category="Academic">Academic</span>
+                        <span class="filter-chip" data-category="Lab Tools">Lab Tools</span>
+                        <span class="filter-chip" data-category="Electronics">Electronics</span>
+                        <span class="filter-chip" data-category="Sports">Sports</span>
+                        <span class="filter-chip" data-category="Audio/Visual">Audio/Visual</span>
+                    </div>
+
+                    <!-- Dynamic Equipment Grid -->
+                    <div class="equipment-grid" id="equipment-grid-container">
+                        <!-- Cards injected by JS -->
+                    </div>
+                </section>
+
+                <!-- 8. ISSUE EQUIPMENT VIEW -->
+                <section class="page-view" id="view-issue">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Issue Equipment Request</h1>
+                            <p class="page-desc">Submit a formal request for campus equipment with valid borrow period.</p>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 680px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-md);">
+                        <form id="issue-equipment-form" novalidate>
+                            <!-- Student Details Row (Readonly) -->
+                            <div class="form-row" style="margin-bottom: 18px;">
+                                <div class="form-group">
+                                    <label class="form-label">Student Name</label>
+                                    <input type="text" class="form-control js-user-name" readonly value="Student Name" style="background: rgba(0,0,0,0.2);">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">College ID</label>
+                                    <input type="text" class="form-control js-user-id" readonly value="ID" style="background: rgba(0,0,0,0.2);">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="issue-eq-select">Select Equipment Item *</label>
+                                <select class="form-control" id="issue-eq-select" required>
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+
+                            <!-- Dynamic Max Days Banner -->
+                            <div id="issue-max-days-info" style="display: none; background: rgba(99, 102, 241, 0.12); border: 1px solid var(--border-glow); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 18px; font-size: 0.85rem;">
+                                <!-- JS content -->
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="issue-date">Issue Date *</label>
+                                    <input type="date" class="form-control" id="issue-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="return-date">Expected Return Date *</label>
+                                    <input type="date" class="form-control" id="return-date" required>
+                                    <div class="invalid-feedback" id="issue-date-error">
+                                        Return date exceeds maximum borrowing period allowed for this equipment.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="issue-purpose">Purpose of Borrowing</label>
+                                <textarea class="form-control" id="issue-purpose" rows="3" placeholder="e.g. For Annual Tech Fest Setup & Exhibition"></textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                                <button type="button" class="btn btn-secondary" onclick="app.switchView('equipment')">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-paper-plane"></i> Submit Issue Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 9. RETURN EQUIPMENT VIEW -->
+                <section class="page-view" id="view-return">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Return Equipment & Penalty Calculation</h1>
+                            <p class="page-desc">Return issued items. Automated late fine calculation at <strong>₹50/day</strong> for overdue equipment.</p>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header-bar">
+                            <h3>Currently Issued Items</h3>
+                            <span style="font-size: 0.85rem; color: var(--text-secondary);">Standard Fine Rate: ₹50 / Overdue Day</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="erp-table">
+                                <thead>
+                                    <tr>
+                                        <th>Equipment Item & ID</th>
+                                        <th>Issue Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Late Penalty</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="return-items-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 10. STUDENT PROFILE VIEW -->
+                <section class="page-view" id="view-profile">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Student Profile</h1>
+                            <p class="page-desc">University ERP student credentials and activity record.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" class="profile-avatar-lg js-user-avatar" alt="Avatar">
+                            <div>
+                                <h2 id="prof-name" class="js-user-name" style="font-size: 1.8rem;">Student Name</h2>
+                                <p style="color: var(--accent); font-weight: 600;" id="prof-id" class="js-user-id">24102C0043</p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;" id="prof-dept" class="js-user-dept">Department</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-grid">
+                            <div class="profile-info-item">
+                                <label>Email Address</label>
+                                <p id="prof-email">student@campus.edu</p>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <label>Current Semester</label>
+                                <p id="prof-sem">6th Semester</p>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <label>Contact Phone</label>
+                                <p id="prof-phone">+91 98765 43210</p>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <label>Member Since</label>
+                                <p id="prof-joined">August 2024</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 32px;">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Borrowing Activity Overview</h3>
+                            <div class="grid-cards" style="margin-bottom: 0;">
+                                <div class="summary-card">
+                                    <div class="card-icon-wrapper card-icon-primary">
+                                        <i class="fa-solid fa-history"></i>
+                                    </div>
+                                    <div class="card-details">
+                                        <h4>Total Borrowed</h4>
+                                        <div class="val" id="prof-stat-total">0</div>
+                                    </div>
+                                </div>
+                                <div class="summary-card">
+                                    <div class="card-icon-wrapper card-icon-accent">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div class="card-details">
+                                        <h4>Active Issues</h4>
+                                        <div class="val" id="prof-stat-active">0</div>
+                                    </div>
+                                </div>
+                                <div class="summary-card">
+                                    <div class="card-icon-wrapper card-icon-success">
+                                        <i class="fa-solid fa-check-double"></i>
+                                    </div>
+                                    <div class="card-details">
+                                        <h4>Successfully Returned</h4>
+                                        <div class="val" id="prof-stat-returned">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+
+    <!-- Verified Student Modal -->
+    <div class="modal-backdrop" id="modal-verified">
+        <div class="modal-card" style="max-width: 400px; text-align: center; padding: 32px;">
+            <div style="width: 64px; height: 64px; background: rgba(16, 185, 129, 0.15); color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px;">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <h2 style="font-size: 1.4rem;">Authentication Verified!</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 6px;">
+                Welcome, <strong id="verified-student-name" style="color: var(--text-primary);">User</strong>.<br>Opening ERP Dashboard...
+            </p>
+        </div>
+    </div>
+
+    <!-- Return Confirmation Modal -->
+    <div class="modal-backdrop" id="modal-return-confirm">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Confirm Equipment Return</h3>
+                <button class="modal-close" onclick="app.closeModal('modal-return-confirm')">&times;</button>
+            </div>
+            <div class="modal-body" id="return-modal-body">
+                <!-- Content injected dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeModal('modal-return-confirm')">Cancel</button>
+                <button class="btn btn-success" id="confirm-return-btn">
+                    <i class="fa-solid fa-check"></i> Confirm Return & Process Fine
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ERP Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
