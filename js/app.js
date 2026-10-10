@@ -485,9 +485,27 @@ class ERPApp {
 
     updateUserUI(user) {
         if (!user) return;
-        document.querySelectorAll('.js-user-name').forEach(el => el.textContent = user.name);
-        document.querySelectorAll('.js-user-id').forEach(el => el.textContent = user.id);
-        document.querySelectorAll('.js-user-dept').forEach(el => el.textContent = user.department);
+        document.querySelectorAll('.js-user-name').forEach(el => {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.value = user.name;
+            } else {
+                el.textContent = user.name;
+            }
+        });
+        document.querySelectorAll('.js-user-id').forEach(el => {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.value = user.id;
+            } else {
+                el.textContent = user.id;
+            }
+        });
+        document.querySelectorAll('.js-user-dept').forEach(el => {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.value = user.department;
+            } else {
+                el.textContent = user.department;
+            }
+        });
         document.querySelectorAll('.js-user-avatar').forEach(el => el.src = user.avatar);
     }
 
@@ -551,6 +569,11 @@ class ERPApp {
     }
 
     renderEventRegisterForm() {
+        const currentUser = this.getCurrentUser();
+        if (currentUser) {
+            this.updateUserUI(currentUser);
+        }
+
         const select = document.getElementById('event-select');
         if (!select) return;
 
@@ -575,11 +598,17 @@ class ERPApp {
             return;
         }
 
+        const nameInput = document.getElementById('event-user-name');
+        const idInput = document.getElementById('event-user-id');
+        const userName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : (currentUser ? currentUser.name : 'Rajdeep Patel');
+        const userId = idInput && idInput.value.trim() ? idInput.value.trim() : (currentUser ? currentUser.id : '24102C0043');
+
         const selectedEvt = this.state.events.find(evt => evt.id === eventSelect.value);
 
         const newReg = {
             id: `REG-EVT-${Math.floor(100 + Math.random() * 900)}`,
-            userId: currentUser ? currentUser.id : "24102C0043",
+            userId: userId,
+            userName: userName,
             eventId: selectedEvt.id,
             eventName: selectedEvt.title,
             date: selectedEvt.date,
@@ -600,7 +629,7 @@ class ERPApp {
     renderDashboard() {
         const currentUser = this.getCurrentUser();
         if (currentUser) {
-            document.querySelectorAll('.js-user-name').forEach(el => el.textContent = currentUser.name);
+            this.updateUserUI(currentUser);
         }
 
         const eq = this.state.equipment;
@@ -850,12 +879,27 @@ class ERPApp {
         const issueDate = document.getElementById('issue-date').value;
         const returnDate = document.getElementById('return-date').value;
         const purpose = document.getElementById('issue-purpose').value;
+        const nameInput = document.getElementById('issue-user-name');
+        const idInput = document.getElementById('issue-user-id');
+
+        const userName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : (currentUser ? currentUser.name : '');
+        const userId = idInput && idInput.value.trim() ? idInput.value.trim() : (currentUser ? currentUser.id : '');
+
+        if (!userName || !userId) {
+            this.showToast('Please provide both Student Name and College ID.', 'warning');
+            return;
+        }
 
         const equipment = this.state.equipment.find(e => e.id === eqSelect.value);
+        if (!equipment) {
+            this.showToast('Please select valid equipment.', 'warning');
+            return;
+        }
 
         const newReq = {
             id: `REQ-${Math.floor(100 + Math.random() * 900)}`,
-            userId: currentUser ? currentUser.id : "24102C0043",
+            userId: userId,
+            userName: userName,
             equipmentId: equipment.id,
             equipmentName: equipment.name,
             category: equipment.category,
